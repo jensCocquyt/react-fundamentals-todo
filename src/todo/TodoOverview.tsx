@@ -1,6 +1,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import format from "date-fns/format";
 import { useState } from "react";
+import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import { Todo } from "./todo.interface";
 
@@ -45,6 +46,7 @@ function TodoOverview() {
           className="h-10 w-10 text-sky-900 cursor-pointer"
         />
       </div>
+      <TodoForm />
     </div>
   );
 }
