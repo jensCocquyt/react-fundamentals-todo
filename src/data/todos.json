@@ -1,0 +1,16 @@
+{
+  "todos": [
+    {
+      "id": 1686150021586,
+      "title": "Groceries",
+      "content": "Do groceries please",
+      "date": "07/06/2023"
+    },
+    {
+      "id": 1686150033106,
+      "title": "Dentist",
+      "content": "Don't forget the dentist appointment",
+      "date": "07/06/2023"
+    }
+  ]
+}
