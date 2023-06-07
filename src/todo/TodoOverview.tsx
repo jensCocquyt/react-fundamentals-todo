@@ -67,13 +67,7 @@ function TodoOverview() {
         onEditItem={handleStartEdit}
         disabled={showSubmitForm}
       />
-      <TodoForm
-        onSubmit={handleSubmit}
-        itemToEdit={itemToEdit}
-        showSubmitForm={showSubmitForm}
-        onClose={closeForm}
-        onOpen={openForm}
-      />
+      <TodoForm onSubmit={handleSubmit} onClose={closeForm} onOpen={openForm} />
     </div>
   );
 }
