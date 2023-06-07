@@ -6,8 +6,9 @@ function TodoList({
   ...props
 }: {
   todoItems: Todo[];
+  disabled: boolean;
   onDeleteItem: (id: number) => void;
-  onUpdateItem: (todo: Todo) => void;
+  onEditItem: (todo: Todo) => void;
 }) {
   if (!todoItems?.length) {
     return <div className="italic text-center">Geen items gevonden</div>;

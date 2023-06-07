@@ -1,4 +1,3 @@
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import format from "date-fns/format";
 import { useState } from "react";
 import TodoForm from "./TodoForm";
@@ -7,7 +6,10 @@ import { Todo } from "./todo.interface";
 
 function TodoOverview() {
   const [todoItems, setTodoItems] = useState<Todo[]>([]);
-  function handleItemAdd(title: string, content?: string) {
+  const [itemToEdit, setItemToEdit] = useState<Todo | null>(null);
+  const [showSubmitForm, setShowSubmitForm] = useState<boolean>(true);
+
+  function handleItemAdd(title: string, content: string) {
     const todo: Todo = {
       id: new Date().getTime(),
       title,
@@ -19,17 +21,41 @@ function TodoOverview() {
   function handleItemDelete(id: number) {
     setTodoItems([...todoItems.filter((item) => item.id !== id)]);
   }
-  function handleItemUpdate(updatedTodo: Todo) {
-    const editedItem = todoItems.find((item) => item.id === updatedTodo.id);
-    if (!editedItem) {
+
+  function handleItemEdit(id: number, title: string, content: string) {
+    const indexToEdit = todoItems.findIndex((item) => item.id === id);
+    if (indexToEdit < 0) {
       return;
     }
-    setTodoItems([
-      ...todoItems.filter((item) => item.id !== updatedTodo.id),
-      {
-        ...updatedTodo,
-      },
-    ]);
+    const editedItems = [...todoItems];
+    editedItems[indexToEdit] = {
+      id,
+      title,
+      content,
+      date: format(new Date(), "dd/MM/yyyy"),
+    };
+    setTodoItems(editedItems);
+  }
+
+  function handleSubmit(title: string, content: string) {
+    itemToEdit
+      ? handleItemEdit(itemToEdit.id, title, content)
+      : handleItemAdd(title, content);
+    closeForm();
+  }
+
+  function handleStartEdit(todo: Todo) {
+    setItemToEdit(todo);
+    openForm();
+  }
+
+  function closeForm() {
+    setShowSubmitForm(false);
+    setItemToEdit(null);
+  }
+
+  function openForm() {
+    setShowSubmitForm(true);
   }
 
   return (
@@ -38,15 +64,16 @@ function TodoOverview() {
       <TodoList
         todoItems={todoItems}
         onDeleteItem={handleItemDelete}
-        onUpdateItem={handleItemUpdate}
+        onEditItem={handleStartEdit}
+        disabled={showSubmitForm}
       />
-      <div className="flex justify-center">
-        <PlusCircleIcon
-          onClick={() => handleItemAdd("test title", "test content")}
-          className="h-10 w-10 text-sky-900 cursor-pointer"
-        />
-      </div>
-      <TodoForm />
+      <TodoForm
+        onSubmit={handleSubmit}
+        itemToEdit={itemToEdit}
+        showSubmitForm={showSubmitForm}
+        onClose={closeForm}
+        onOpen={openForm}
+      />
     </div>
   );
 }
