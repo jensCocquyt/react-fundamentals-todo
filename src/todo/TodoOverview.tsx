@@ -1,3 +1,4 @@
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import format from "date-fns/format";
 import { useState } from "react";
 import TodoForm from "./TodoForm";
@@ -58,6 +59,17 @@ function TodoOverview() {
     setShowSubmitForm(true);
   }
 
+  const content = showSubmitForm ? (
+    <TodoForm onSubmit={handleSubmit} onClose={closeForm} />
+  ) : (
+    <div className="flex justify-center">
+      <PlusCircleIcon
+        onClick={openForm}
+        className="h-10 w-10 text-sky-900 cursor-pointer"
+      />
+    </div>
+  );
+
   return (
     <div className="flex w-1/2 m-auto gap-4 flex-col p-4">
       <h2 className="text-center text-xl">Todo Items</h2>
@@ -67,7 +79,7 @@ function TodoOverview() {
         onEditItem={handleStartEdit}
         disabled={showSubmitForm}
       />
-      <TodoForm onSubmit={handleSubmit} onClose={closeForm} onOpen={openForm} />
+      {content}
     </div>
   );
 }

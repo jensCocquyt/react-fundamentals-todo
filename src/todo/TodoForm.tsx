@@ -1,17 +1,12 @@
-import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 interface TodoFormProps {
   onSubmit: (title: string, content: string) => void;
   onClose: () => void;
-  onOpen: () => void;
 }
-function TodoForm({ onClose, onOpen }: TodoFormProps) {
+function TodoForm({ onClose }: TodoFormProps) {
   return (
     <>
       <div className="flex justify-center">
-        <PlusCircleIcon
-          onClick={onOpen}
-          className="h-10 w-10 text-sky-900 cursor-pointer"
-        />
         <XMarkIcon
           onClick={onClose}
           className="h-10 w-10 text-sky-900 cursor-pointer"
